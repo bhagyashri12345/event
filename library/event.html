@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Event Handling</title>
+    <meta charset="utf-8" />
+    <style>
+        #todoapp ul {
+            list-style-type: none;
+        }
+        #todo-list input.edit {
+            display: none;
+        }
+        #todo-list .editing label {
+            display: none;
+        }
+        #todo-list .editing input.edit {
+            display: inline;
+        }
+        .active{
+                color: red;
+        }
+        .hidden{
+            display: none;
+        }
+        .visible{
+            display: block;
+        }
+    </style>
+</head>
+
+<body style="background-color:#a1a1a1;">
+    <section id="todoapp" style="background-color:#ffcccc;margin-left:20px;margin-right:20px;">
+        <header id="header">
+            <h1 style="margin-left:20px;">Event 
+            <button style="text-align:right;float:right;margin-right:20px;margin-top:5px;">Add Event</button>
+            </h1>
+            
+
+        </header>
+        <section id="main">
+            <ul id="todo-list"></ul>
+        </section>
+    </section>
+
+ <script type="text/template" id="item-template">
+      <div class="view <%= completed > 30 ? 'play' : '' %>"  style="text-align:center;">
+        <!-- <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %> > -->
+        <label id="ip"  style="text-align:center right;" class=<%= rejected ? 'active' : '' %>><%- title %></label>
+        <input class="edit" value="<%- title %>">
+        <button class="toggle"><%= completed ? "playing" : "play" %> </button> 
+
+        <button id="rej" class=<%= rejected ? 'unreject' : 'reject' %> value=""><%= rejected ? "Favorite" : "add favorite" %></button>
+      </div>
+ </script>
+
+
+    <script src="jquery-3.1.0.min.js"></script>
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+    <script src="backbone.localStorage.js"></script>
+
+    <script>
+    var app = {}; // create namespace for our app
+
+    (function($) {
+
+        app.Todo = Backbone.Model.extend({
+            defaults: {
+                title: '',
+                completed: 0,
+                rejected: false
+            },
+
+            toggle: function() {
+                this.save({
+                    completed:this.get('completed')+1
+                });
+            }
+        });
+
+        app.TodoList = Backbone.Collection.extend({
+            model: app.Todo,
+            localStorage: new Backbone.LocalStorage("TodoStore"),
+            completed: function() {
+                return this.filter(function(todo) {
+                    var val;
+                   if(todo.get('completed')>30)
+                   {
+                    val=true;
+
+                   }else{
+                    val=false;
+                   }
+                    return val;
+
+                });
+            },
+
+            remaining: function() {
+                return this.without.apply(this, this.completed());
+            },
+            rejected: function(){
+                return this.filter(function(todo){
+                    return todo.get("rejected");
+                });
+            },
+            unrejected: function() {
+                return this.without.apply(this, this.rejected());
+            }
+        });
+
+        app.todoList = new app.TodoList();
+
+        app.TodoView = Backbone.View.extend({
+            initialize: function() {
+                this.model.on("change", this.render, this);
+                this.model.on('destroy', this.remove, this);
+                // console.log(this.model.on("change",this.render,this));
+            },
+
+            tagName: "li",
+            template: _.template($("#item-template").html()),
+            render: function() {
+                this.$el.html(this.template(this.model.toJSON()));
+                // console.log(this.$el.html(this.template(this.model.toJSON())))
+                this.input = this.$(".edit");
+                
+                return this;
+            },
+            events: {
+                "dblclick label": "edit",
+                'keypress .edit': 'updateOnEnter',
+                'blur .edit': 'close',
+                'click .toggle': 'toggleCompleted',
+                'click .destroy': 'destroy',
+                'click .reject': 'reject',
+                'click .unreject': 'unreject',
+
+            },
+
+            edit: function() {
+                this.$el.addClass("editing");
+                this.input.focus();
+            },
+
+            updateOnEnter: function(e) {
+                if (e.which === 13) this.close();
+            },
+
+            close: function() {
+                var value = this.input.val().trim();
+
+                if (value) {
+                    this.model.save({
+                        title: value
+                    });
+                }
+
+                this.$el.removeClass("editing");
+            },
+
+            toggleCompleted: function() {
+                this.model.toggle();
+                console.log(this.model.get('completed'))
+            },
+
+            destroy: function() {
+                this.model.destroy();
+            },
+            reject: function(e){
+
+                // console.log(this.$("#rej")[0]['innerText'])
+                // this.$el.find('#ip').addClass('active');
+                // this.$el.find('#rej').removeClass('reject');
+                // this.$el.find('#rej').addClass('unreject');
+                //  this.$("#rej")[0]['innerText']="unreject";
+                //     app.demo= new app.Todo();
+                //     console.log(app.demo)
+                    this.model.save({
+                        rejected:true
+                    });
+                   
+                // var rej = this.input.val()
+                // rej.css('color', 'red');
+                // styles:{
+                //     'color':'blue'
+                // }
+            },
+            unreject: function(e){
+                
+                
+                 this.model.save({
+                        rejected:false
+                    });
+                 this.$('.view').remove()
+            }
+        });
+
+        app.AppView = Backbone.View.extend({
+            el: "#todoapp",
+            initialize: function() {
+                this.input = this.$("#new-todo");
+                app.todoList.on("add", this.addAll, this);
+                app.todoList.on("reset", this.addAll, this);
+                app.todoList.fetch();
+            },
+            events: {
+                
+            }
+
+        });
+
+
+
+        app.Router = Backbone.Router.extend({
+            routes: {
+                ':filter': 'setFilter'
+            },
+            setFilter: function(params) {
+                console.log(params)
+                window.filter = params.trim() || '';
+               app.todoList.trigger('reset');
+            }
+        });
+
+        app.router = new app.Router();
+        Backbone.history.start();
+
+        app.appView = new app.AppView();
+
+    })(jQuery);
+    </script>
+</body>
+</html>

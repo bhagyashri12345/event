@@ -1,0 +1,41 @@
+li{
+        text-decoration: none;
+      }
+      .bggrey{
+        background-color:#a1a1a1
+      }
+      .bgpeach{
+        background-color:#ffcccc;
+        margin-left:20px;margin-right:20px;padding:10px;
+      }
+      .hidden{
+        display: none;
+      }
+      .addEvent{
+        text-align:right;float:right;margin-right:40px;margin-top:5px;
+      }
+      .event{
+        text-align: center;
+        text-decoration-style: none;
+        padding:20px;
+        font-size: 25px;
+      }
+      .btn{
+        padding: 5px;
+        margin: 7px;
+      }
+      .headin{
+        margin-left:20px; font-size:40px;
+      }
+      .mrgrig{
+        margin-right:30px;
+      }
+      .marbot{
+        margin-bottom:30px;
+      }
+      .dropdown{
+        width: 89px;font-size: 20px;margin-top:20px;margin-right:105px;
+      }
+      .marright{
+        margin-right:65px;
+      }

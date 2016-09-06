@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form</title>
+   <link rel="stylesheet"  href="event.css">
+  <script src="library/jquery-3.1.0.min.js"></script>
+    <script src="library/underscore.js"></script>
+    <script src="library/backbone.js"></script>
+    <script src="library/handlebars-v4.0.5.js"></script>
+    <script src="router/route.js"></script>
+    <!-- <script type="text/css" src="/Users/bhagyashri/Desktop/event/event.css"></script> -->
+    <script src="/Users/bhagyashri/Desktop/event/main.js"></script>
+        <script src="/Users/bhagyashri/Desktop/event/model/eventmodel.js"></script>
+     
+    <script src="/Users/bhagyashri/Desktop/event/collection/eventcollection.js"></script>
+    
+
+     <script src="/Users/bhagyashri/Desktop/event/view/logoview.js"></script>
+     <script src="/Users/bhagyashri/Desktop/event/view/listview.js"></script>
+     <script src="/Users/bhagyashri/Desktop/event/view/formview.js"></script>
+     
+    <style>
+      
+    </style>
+    <!-- <script src="eventHandling.js"></script> -->
+</head>
+<body class="bggrey">
+<div id="container"></div>
+<ul id="eventList" class="bgpeach"></ul>
+<script type="text/template" id="event_template">
+  <header id="header" class="bgpeach">
+            <h1 class="headin">{{eve}}
+            <button class="addEvent btn"><a href="#/add">{{add}}</a></button>
+            </h1>
+            
+
+  </header>
+</script>
+<div>
+
+</div>
+<script type="text/template" id="list_template" class="bgpeach">
+  <div class="event">
+  <label><b> Owner Name:</b></label>{{fname}} {{lname}}<br>
+  <label><b> Type of Event:</b></label>{{type}}<br>
+  <label><b> When?? :</b></label>{{date}} {{time}} <label><b> Where??  :</b></label>{{venue}}<br>
+  <label><b> For Tickets: Contact: </b></label>{{tel}}<label>  <b> Email:</b></label> {{email}}<br>
+  <button class="btn delete">Delete</button>
+  <button class="btn update">Update</button>
+  </div>
+</script>
+<script type="text/template" id="form_template">
+<form class="bgpeach" action="" method="post">
+  <h1>Form</h1>
+  First Name:
+  <input type="text" id="name" name="firstname" class="mrgrig" value="{{fname}}">
+  Last Name:
+  <input type="text" id="lname" name="lastname" class="marbot" value="{{lname}}"><br>
+  Email:
+  <input type="email" id="email" name="email" class="mrgrig" value="{{email}}">
+  Contact
+  <input type="tel" id="contact" name="usrtel" value="{{tel}}"><br>
+  Type:
+  <select id="type" class="dropdown" value="{{type}}">
+  <option value="Music">Music</option>
+  <option value="Dance">Dance</option>
+  <option value="Comedy">Comedy</option>
+  <option value="Party">Party</option>
+  </select>
+  Date
+  <input id="date" type="date" class="marright" value="{{date}}">
+  Time
+  <input id="time" type="time" class="marbot" value="{{time}}"><br>
+  Vanue
+  <input id="plc" type="" class="marbot marright" value="{{venue}}">
+  Poster
+  <input id="poster" type="file"><br>
+  <button id="updatebtn" class="updateData" type="button"><a>update</a></button>
+  <button id="addbtn" class="add"><a>add</a></button>
+</form>
+</script>
+</body>
+</html>
