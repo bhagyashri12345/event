@@ -26,8 +26,8 @@ eventlist = Backbone.View.extend({
   },
   modelUpdate:function(data){
     
-    router.navigate("update/"+this.model.attributes.idd,{trigger: true})
-    console.log(this.model.attributes.idd)
+    router.navigate("update/"+this.model.attributes.id,{trigger: true})
+    console.log(this.model.attributes.id)
     // $("#container").html("")
     // $("#eventList").html("")
     //            var source   = $("#form_template").html();

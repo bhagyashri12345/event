@@ -7,6 +7,7 @@ listView=Backbone.View.extend({
     listI.fetch()
     
     this.render();
+
   },
   tagName:"div",
   render:function(){
@@ -23,13 +24,13 @@ listView=Backbone.View.extend({
     
   },
   displayForm:function(){
-      $("#eventList").html("")
+      $("#eventList").empty()
 
       var context = this.model.toJSON();
       var source   = $("#form_template").html();
       var template = Handlebars.compile(source);
       this.$el.html(template(context));
-      $("#updatebtn").addClass('hidden')
+      // $("#updatebtn").addClass('hidden')
       $("#container").html(this.$el)
   },
   renderList: function (model){
@@ -37,7 +38,7 @@ listView=Backbone.View.extend({
     var list = new eventlist({
               model:model
              });
-    $('#eventList').append(list.render().el);
+    this.$el.append(list.render().el).addClass('bgpeach');
   },
   
   

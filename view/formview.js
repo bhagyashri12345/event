@@ -1,13 +1,13 @@
 eveView = Backbone.View.extend({
             initialize: function() {
                 this.render();
-                this.bind(this,'input_change');
+                $('#eventList').empty() 
             },
 
             tagName: "div",
            
-            render: function() {
-              $("#eventList").html("")
+            render: function() { 
+              console.log(this.$el)
                 var context = this.model.toJSON();
                 var source   = $("#form_template").html();
                 var template = Handlebars.compile(source);
@@ -18,22 +18,23 @@ eveView = Backbone.View.extend({
             },
             events: {
                 'click .add': 'add',
-                'click .updateData': 'readData',
-                // 'change input':'input_change'
+                'click .updateData': 'readData'
+                
             },
             add: function() {
-
-              console.log("add")
+              $('#eventList').empty() 
+              // console.log(this.$el.find("input#name").val())
+              // console.log($("#name")[0].value)
              
-                this.fname=$("#name")[0].value
+                this.fname=this.$el.find("input#name").val()
                 // console.log(this.fname)
-                this.lname=$("#lname")[0].value
-                this.email=$("#email")[0].value
-                this.contact=$("#contact")[0].value
-                this.type=$("#type")[0].value
-                this.date=$("#date")[0].value
-                this.time=$("#time")[0].value
-                this.venue=$("#plc")[0].value
+                this.lname=this.$el.find("input#lname").val()
+                this.email=this.$el.find("input#email").val()
+                this.contact=this.$el.find("input#contact").val()
+                this.type=this.$el.find("input#type").val()
+                this.date=this.$el.find("input#date").val()
+                this.time=this.$el.find("input#time").val()
+                this.venue=this.$el.find("input#plc").val()
                 this.model.set({fname: this.fname, lname:this.lname , email: this.email, tel:this.contact ,type:this.type,date:this.date,time:this.time,venue:this.venue})
                 
                 this.model.save()
@@ -50,9 +51,9 @@ eveView = Backbone.View.extend({
             // },
             readData:function(){
                 console.log("update");
-               
+               $('#eventList').empty() 
               var id=this.model.attributes.id
-              console.log(id)
+              var div=this.$el
               var transaction = db.transaction(["event-list"], "readwrite");
               var objectStore = transaction.objectStore("event-list");
                
@@ -62,14 +63,14 @@ eveView = Backbone.View.extend({
                if(cursor){
                if (cursor.key==id) {
                 
-                cursor.value.fname=$("#name")[0].value
-                cursor.value.lname=$("#lname")[0].value
-                cursor.value.email=$("#email")[0].value
-                cursor.value.contact=$("#contact")[0].value
-               cursor.value.type=$("#type")[0].value
-               cursor.value.date=$("#date")[0].value
-                cursor.value.time=$("#time")[0].value
-                cursor.value.venue=$("#plc")[0].value
+                cursor.value.fname=div.find("input#name").val()
+                cursor.value.lname=div.find("input#lname").val()
+                cursor.value.email=div.find("input#email").val()
+                cursor.value.contact=div.find("input#contact").val()
+               cursor.value.type=div.find("input#type").val()
+               cursor.value.date=div.find("input#date").val()
+                cursor.value.time=div.find("input#time").val()
+                cursor.value.venue=div.find("input#plc").val()
                 
                 console.log(cursor.value)
                 cursor.update(cursor.value)

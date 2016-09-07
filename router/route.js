@@ -5,11 +5,11 @@ var Routers = Backbone.Router.extend({
                  '*events': 'showEvents',
                  'update':'updateEvent',
 
+
             },
             showEvents: function(event) {
                           
 
-                 $("#container").html()
                 var listview = new listView({
                     model: new eveModel()
                 }); 
@@ -17,6 +17,7 @@ var Routers = Backbone.Router.extend({
             },
             addEvent: function(){
                
+
              var view = new eveView({
                     model: new eveModel()
                 });   
@@ -24,6 +25,7 @@ var Routers = Backbone.Router.extend({
             },
             updateEvent:function(param){
               console.log("in updateEvent")
+              $("#eventList").empty()
               var data={}
               var objectStore = db.transaction("event-list").objectStore("event-list");
               objectStore.openCursor().onsuccess = function(event) {
