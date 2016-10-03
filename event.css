@@ -1,4 +1,4 @@
-li{
+      li{
         text-decoration: none;
       }
       .bggrey{
@@ -10,6 +10,9 @@ li{
       }
       .hidden{
         display: none;
+      }
+      .visible{
+        display: block;
       }
       .addEvent{
         text-align:right;float:right;margin-right:40px;margin-top:5px;

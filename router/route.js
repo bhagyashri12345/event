@@ -24,6 +24,7 @@ var Routers = Backbone.Router.extend({
              
             },
             updateEvent:function(param){
+              $("#addbtn").addClass('hidden');
               console.log("in updateEvent")
               $("#eventList").empty()
               var data={}

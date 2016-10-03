@@ -9,31 +9,40 @@
     <script src="library/handlebars-v4.0.5.js"></script>
     <script src="router/route.js"></script>
     <!-- <script type="text/css" src="/Users/bhagyashri/Desktop/event/event.css"></script> -->
-    <script src="/Users/bhagyashri/Desktop/event/main.js"></script>
-        <script src="/Users/bhagyashri/Desktop/event/model/eventmodel.js"></script>
+    <script src="main.js"></script>
+    <script src="model/eventmodel.js"></script>
      
-    <script src="/Users/bhagyashri/Desktop/event/collection/eventcollection.js"></script>
+    <script src="collection/eventcollection.js"></script>
     
 
-     <script src="/Users/bhagyashri/Desktop/event/view/logoview.js"></script>
-     <script src="/Users/bhagyashri/Desktop/event/view/listview.js"></script>
-     <script src="/Users/bhagyashri/Desktop/event/view/formview.js"></script>
-     
-    <style>
-      
-    </style>
-    <!-- <script src="eventHandling.js"></script> -->
+    <script src="view/logoview.js"></script>
+    <script src="view/listview.js"></script>
+    <script src="view/formview.js"></script>
 </head>
 <body class="bggrey">
 <div id="container"></div>
-<ul id="eventList" class="bgpeach"></ul>
 <script type="text/template" id="event_template">
   <header id="header" class="bgpeach">
             <h1 class="headin">{{eve}}
             <button class="addEvent btn"><a href="#/add">{{add}}</a></button>
             </h1>
+            <form class="btn"  id="searchform">
+              <input type="text" name="search" id="searchbox">
+              Events/Page:
+            <select id="perPage" class="dropdown" name="perpage">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+            </select>
+              <button id="search" name="submit">Search</button>
+              <!-- <input  type="button" name="submit" value="Search">  -->
+            </form>
+            <br>
+            <button id="prev" name="prev" class="hidden">Previous</button>
+            <button id="next" name="next">Next</button>
             
-
+      <ul id="eventList" class="bgpeach"></ul>
   </header>
 </script>
 <div>
@@ -46,36 +55,37 @@
   <label><b> When?? :</b></label>{{date}} {{time}} <label><b> Where??  :</b></label>{{venue}}<br>
   <label><b> For Tickets: Contact: </b></label>{{tel}}<label>  <b> Email:</b></label> {{email}}<br>
   <button class="btn delete">Delete</button>
-  <button class="btn update">Update</button>
+  <button id="update" class="btn update">Update</button>
   </div>
 </script>
 <script type="text/template" id="form_template">
-<form class="bgpeach" action="" method="post">
+<form class="bgpeach" id="formdata" action="" method="POST">
   <h1>Form</h1>
   First Name:
-  <input type="text" id="name" name="firstname" class="mrgrig" value="{{fname}}">
+  <input type="text" id="name" name="firstname" class="mrgrig" value="{{fname}}"><label id="fname" class="hidden">* Mandatory</label>
+
   Last Name:
-  <input type="text" id="lname" name="lastname" class="marbot" value="{{lname}}"><br>
+  <input type="text" id="lname" name="lastname" class="marbot" value="{{lname}}"><label id="lastname" class="hidden">* Mandatory</label><br>
   Email:
-  <input type="email" id="email" name="email" class="mrgrig" value="{{email}}">
+  <input type="email" id="email" name="email" class="mrgrig" value="{{email}}"><label id="email" class="hidden">* Mandatory</label>
   Contact
-  <input type="tel" id="contact" name="usrtel" value="{{tel}}"><br>
+  <input type="tel" id="contact" name="usrtel" value="{{tel}}"><label id="phone" class="hidden">* Mandatory</label><br>
   Type:
-  <select id="type" class="dropdown" value="{{type}}">
+  <select id="type" class="dropdown" name="type" value="{{type}}">
   <option value="Music">Music</option>
   <option value="Dance">Dance</option>
   <option value="Comedy">Comedy</option>
   <option value="Party">Party</option>
   </select>
   Date
-  <input id="date" type="date" class="marright" value="{{date}}">
+  <input id="date" type="date" name="date" class="marright" value="{{date}}">
   Time
-  <input id="time" type="time" class="marbot" value="{{time}}"><br>
+  <input id="time" type="time" name="time" class="marbot" value="{{time}}"><br>
   Vanue
-  <input id="plc" type="" class="marbot marright" value="{{venue}}">
+  <input id="plc" type="" name="venue" class="marbot marright" value="{{venue}}">
   Poster
   <input id="poster" type="file"><br>
-  <button id="updatebtn" class="updateData" type="button"><a>update</a></button>
+  <button id="updatebtn" class="updateData"><a>update</a></button>
   <button id="addbtn" class="add"><a>add</a></button>
 </form>
 </script>

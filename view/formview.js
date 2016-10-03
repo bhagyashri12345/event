@@ -1,13 +1,21 @@
 eveView = Backbone.View.extend({
             initialize: function() {
+                console.log(this.model.attributes);
+
                 this.render();
                 $('#eventList').empty() 
+                if(this.model.attributes.showbtn){
+                 $("#updatebtn").addClass('hidden'); 
+                }
+                else{
+                  $("#addbtn").addClass('hidden'); 
+                }
             },
 
             tagName: "div",
            
             render: function() { 
-              console.log(this.$el)
+              // console.log(this.$el)
                 var context = this.model.toJSON();
                 var source   = $("#form_template").html();
                 var template = Handlebars.compile(source);
@@ -17,72 +25,92 @@ eveView = Backbone.View.extend({
                 return this;
             },
             events: {
-                'click .add': 'add',
-                'click .updateData': 'readData'
+                'click #addbtn': 'add',
+                'click #updatebtn': 'readData'
                 
             },
             add: function() {
-              $('#eventList').empty() 
-              // console.log(this.$el.find("input#name").val())
-              // console.log($("#name")[0].value)
-             
-                this.fname=this.$el.find("input#name").val()
-                // console.log(this.fname)
-                this.lname=this.$el.find("input#lname").val()
-                this.email=this.$el.find("input#email").val()
-                this.contact=this.$el.find("input#contact").val()
-                this.type=this.$el.find("input#type").val()
-                this.date=this.$el.find("input#date").val()
-                this.time=this.$el.find("input#time").val()
-                this.venue=this.$el.find("input#plc").val()
-                this.model.set({fname: this.fname, lname:this.lname , email: this.email, tel:this.contact ,type:this.type,date:this.date,time:this.time,venue:this.venue})
-                
-                this.model.save()
-                router.navigate("events",{trigger: true})
-                 return false;
-            },
-            // input_change:function(e){
-            //   var $input=$(e.currentTarget);
-            //   var inputName=$input.attr('fname');    // this doesn't work and I'm trying to get to work
-            //    var inputLname=$input.attr('lname');
+              // console.log("xcasdsadadsd");
+              $.ajax({
+                type: "POST",
+                url: "collection/event.php",
+                data: $("#formdata").serialize(),
+                success: function(data)
+                { 
+                  var D =JSON.parse(data) ;
+                  console.log(D.status)
+                  if (D.fname=="valid") {
+                     D.status="valid";
+                    $("#fname").removeClass('visible').addClass('hidden');
+                    // $("#fname").html(data);
+                  }
+                  else{
+                    // D.status="fail";
+
+                   $("#fname").html(D.fname);
+                   $("#fname").removeClass('hidden').addClass('visible');
+                  }
+                  if (D.lname=="valid") {
+                     D.status="valid";
+                    $("#lastname").removeClass('visible').addClass('hidden');
+                    // $("#lastname").html(data);
+                  }
+                  else{
+                    // D.status="fail";
+
+                   $("#lastname").html(D.lname);
+                   $("#lastname").removeClass('hidden').addClass('visible');
+                  }
+                  if (D.lname=="valid") {
+                    D.status="valid";
+                    $("#lastname").removeClass('visible').addClass('hidden');
+                    // $("#lastname").html(data);
+                  }
+                  else{
+                    // D.status="fail";
+
+                   $("#lastname").html(D.lname);
+                   $("#lastname").removeClass('hidden').addClass('visible');
+                  }
+                  if (D.status=='valid') {
+                    console.log("valid")
+                    router.navigate("events",{trigger: true});
+                  }
+                } 
+              })
+
               
-
-            //   // console.log(inputName+inputLname)
-            // },
-            readData:function(){
-                console.log("update");
-               $('#eventList').empty() 
-              var id=this.model.attributes.id
-              var div=this.$el
-              var transaction = db.transaction(["event-list"], "readwrite");
-              var objectStore = transaction.objectStore("event-list");
-               
+                   return false;
+                // }
+                 
+            },
             
-               objectStore.openCursor().onsuccess = function(event) {
-               var cursor = event.target.result;
-               if(cursor){
-               if (cursor.key==id) {
-                
-                cursor.value.fname=div.find("input#name").val()
-                cursor.value.lname=div.find("input#lname").val()
-                cursor.value.email=div.find("input#email").val()
-                cursor.value.contact=div.find("input#contact").val()
-               cursor.value.type=div.find("input#type").val()
-               cursor.value.date=div.find("input#date").val()
-                cursor.value.time=div.find("input#time").val()
-                cursor.value.venue=div.find("input#plc").val()
-                
-                console.log(cursor.value)
-                cursor.update(cursor.value)
-                router.navigate("events",{trigger: true})
+            readData:function(){
+              $("#addbtn").addClass('hidden');
+              var id=this.model.attributes.id;
+              var div=this.$el;
+              var fname=div.find("input#name").val()
+              var lname=div.find("input#lname").val()
+              var email=div.find("input#email").val()
+              var contact=div.find("input#contact").val()
 
-
-               }
-               cursor.continue();
-               }
-               
-            };
+              var type=div.find("#type").val()
+              console.log(type);
+              var date=div.find("input#date").val()
+              var time=div.find("input#time").val()
+              var venue=div.find("input#plc").val()
+              $.ajax({
+                type: "POST",
+                url: "collection/update.php",
+                data: {'id':id,'fname':fname,'lname':lname,'email':email,'contact':contact,'type':type,'date':date,'time':time,'venue':venue},
+                success: function(data)
+                { 
+                  console.log(data);
+                } 
+              })
+            
               console.log( this.model)
+              router.navigate("events",{trigger: true})
                return false;
             }
           });
