@@ -8,7 +8,9 @@ fetch:function(data,page,button,p){
   var demo = this;
   var text = data;
   var a = button;
-console.log(a);
+  // console.log(a);
+  $("#eventList").html("");
+  $("#eventList").append("<img id='theImg' src='img/ajax-loader.gif'/>");
   $.ajax({
       type: "GET",
       url: "view/eventList.php",
