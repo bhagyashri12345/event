@@ -38,7 +38,7 @@ eveView = Backbone.View.extend({
                 success: function(data)
                 { 
                   var D =JSON.parse(data) ;
-                  console.log(D.status)
+                  console.log(D)
                   if (D.fname=="valid") {
                      D.status="valid";
                     $("#fname").removeClass('visible').addClass('hidden');
@@ -73,7 +73,7 @@ eveView = Backbone.View.extend({
                    $("#lastname").removeClass('hidden').addClass('visible');
                   }
                   if (D.status=='valid') {
-                    console.log("valid")
+                  //  console.log("valid")
                     router.navigate("events",{trigger: true});
                   }
                 } 

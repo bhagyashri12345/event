@@ -5,10 +5,10 @@ listView=Backbone.View.extend({
     var pages = 0;
     var a=listI
     a.on('add',this.renderList,this)
-    
-    listI.fetch();
-    
     this.render();
+    listI.fetch("",1,this.$el);
+    
+    
     
   },
   tagName:"div",
@@ -58,7 +58,8 @@ listView=Backbone.View.extend({
     var a = this.$el;
    
     page++;
-     listI.fetch(this.$el.find("#searchbox").val(),page,this.$el);
+     console.log(a);
+     listI.fetch(this.$el.find("#searchbox").val(),page,this.$el,this.$el.find("#perPage").val());
    
   },
   pagination_prev:function(){

@@ -8,6 +8,7 @@ fetch:function(data,page,button,p){
   var demo = this;
   var text = data;
   var a = button;
+console.log(a);
   $.ajax({
       type: "GET",
       url: "view/eventList.php",
@@ -17,7 +18,7 @@ fetch:function(data,page,button,p){
         var db = JSON.parse(data);
         console.log(db);
         if(db.pagination['totalPage']<=1){
-          a.find("#next").removeClass('visible').addClass('hidden');
+          button.find("#next").removeClass('visible').addClass('hidden');
           a.find("#prev").removeClass('visible').addClass('hidden');
         }
         if(page>db.pagination.totalPage-1){
