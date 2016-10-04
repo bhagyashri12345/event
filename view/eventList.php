@@ -1,10 +1,11 @@
 <?php
 	$mysqli = new mysqli("127.0.0.1", "newuser","password","events");
 if ($mysqli->connect_errno) {
-     // echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+     //echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+
 }
 else{
-	  // echo "sucessfully connect<br>";
+	  //echo "sucessfully connect<br>";
 }
 $search = $_GET['data'];
 
@@ -23,9 +24,7 @@ $search = $_GET['data'];
 		// $sqli = "select * from evedata";
 		$result=$mysqli->query($sql);
 		$total = $result->fetch_array(MYSQLI_ASSOC);
-
-	
-	$sql = "SELECT * FROM evedata WHERE  fname LIKE '%" . $name . "%' OR lname LIKE '%" . $name  ."%'"." limit $start,$no";
+	$sql = "SELECT * FROM evedata WHERE  fname LIKE '%" . $name . "%' OR lname LIKE '%" . $name  ."%'"." ORDER BY created DESC"." limit $start,$no";
 	// echo $sql;
 			$result=$mysqli->query($sql);
 			// print_r($result);

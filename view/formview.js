@@ -30,7 +30,8 @@ eveView = Backbone.View.extend({
                 
             },
             add: function() {
-              // console.log("xcasdsadadsd");
+              $("#eventList").append("<img id='theImg' src='img/ajax-loader.gif'/>");
+		// console.log("xcasdsadadsd");
               $.ajax({
                 type: "POST",
                 url: "collection/event.php",
@@ -86,7 +87,8 @@ eveView = Backbone.View.extend({
             },
             
             readData:function(){
-              $("#addbtn").addClass('hidden');
+              $("#eventList").append("<img id='theImg' src='img/ajax-loader.gif'/>");
+		$("#addbtn").addClass('hidden');
               var id=this.model.attributes.id;
               var div=this.$el;
               var fname=div.find("input#name").val()

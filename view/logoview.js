@@ -41,7 +41,7 @@ listView=Backbone.View.extend({
   },
   displayForm:function(){
       $("#eventList").empty()
-
+ 
       var context = this.model.toJSON();
       var source   = $("#form_template").html();
       var template = Handlebars.compile(source);

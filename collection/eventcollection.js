@@ -19,6 +19,7 @@ fetch:function(data,page,button,p){
       { 
         var db = JSON.parse(data);
         console.log(db);
+	//$("#eventList").html("Total Count"+db.pagination['count']);
         if(db.pagination['totalPage']<=1){
           button.find("#next").removeClass('visible').addClass('hidden');
           a.find("#prev").removeClass('visible').addClass('hidden');
@@ -32,8 +33,9 @@ fetch:function(data,page,button,p){
         if(page<db.pagination.totalPage){
           a.find("#next").removeClass('hidden').addClass('visible');
         }
-        $("#eventList").html(db.pagination['currentPage']+" of "+db.pagination['totalPage']) 
-        if(db.events==null){
+        $("#eventList").html(db.pagination['currentPage']+" of "+db.pagination['totalPage']+"<br>   Total Count:"+db.pagination['count']) 
+       //$("#eventList").html("Total Count"+db.pagination['count']);
+	 if(db.events==null){
           console.log("events null")
           $("#eventList").html("No more Results")
           a.find("#next").removeClass('visible').addClass('hidden');
