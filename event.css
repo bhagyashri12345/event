@@ -46,3 +46,7 @@
       {
         float: right;
       }
+      .loader{
+          margin-left: 50%;
+          margin-top: 15%;
+      }

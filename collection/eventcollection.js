@@ -49,6 +49,7 @@ fetch:function(data,page,button,p){
         }
       }
   })
+  return false;
 },
  onModelRemoved:function(){
   // console.log("fghjk")
