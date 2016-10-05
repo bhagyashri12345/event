@@ -60,7 +60,7 @@ listView=Backbone.View.extend({
     page++;
      console.log(a);
      listI.fetch(this.$el.find("#searchbox").val(),page,this.$el,this.$el.find("#perPage").val());
-   
+  return false; 
   },
   pagination_prev:function(){
     page--;
