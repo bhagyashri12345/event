@@ -49,11 +49,7 @@ fetch:function(data,page,button,p){
         }
       }
   })
-<<<<<<< HEAD
-return false;
-=======
   return false;
->>>>>>> de38f54ec57bdae89baa06075c22414f80fa9c26
 },
  onModelRemoved:function(){
   // console.log("fghjk")
