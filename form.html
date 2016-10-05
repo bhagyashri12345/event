@@ -28,21 +28,29 @@
             </h1>
             <form class="btn"  id="searchform">
               <input type="text" name="search" id="searchbox">
-              Events/Page:
+             
+              <button id="search" name="submit">Search</button>
+              <!-- <input  type="button" name="submit" value="Search">  -->
+            <div class="floatR">
+            <label>Events/Page:</label>
             <select id="perPage" class="dropdown" name="perpage">
+
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
               <option value="40">40</option>
-            </select>
-              <button id="search" name="submit">Search</button>
-              <!-- <input  type="button" name="submit" value="Search">  -->
+              </select>
+              </div>
             </form>
-            <br>
+            <ul id="eventList" class="bgpeach"></ul>
+            <div class="floatR">
+
+               
+               <!--  -->
+            
             <button id="prev" name="prev" class="hidden">Previous</button>
             <button id="next" name="next">Next</button>
-            
-      <ul id="eventList" class="bgpeach"></ul>
+            </div>
   </header>
 </script>
 <div>
